@@ -1,9 +1,5 @@
 import React from "react";
 
-// throw away
-// learing redux in react
-import store from "../store";
-
 export default class Home 
         extends React.Component {
 
@@ -11,28 +7,54 @@ export default class Home
         super();
 
         this.state  = {
+            counter: 0,
             show: true,
             frameworks: ['react', 'redux']
         }
- 
+
+        this.count = 0;
     }
 
     increment(e) {
         console.log("Inc ", e);
-        let action = {
-            type: 'INCREMENT',
-            payload: {
-                value: 1
-            }
-        }
 
-        store.dispatch(action);
+        // not for production
+        //console.trace(); //prints call stack
+
+        //BAD: direct state mutation
+        this.state.counter++;
+        console.log("Counter ", this.state.counter);
+
+        //BAD
+        // trigger react calls render method
+        this.forceUpdate();
     }
 
     //ES.NEXT 
     decrement = () => {
         console.log("decrement called");
-        
+
+         
+        // setState is Async
+        console.log("counter before", 
+                    this.state.counter)
+        //GOOD, trigger render method
+        this.setState({
+            counter: this.state.counter - 1
+        }, () => {
+            console.log("setState callback");
+            this.setState({
+                counter: this.state.counter - 1
+            })
+        })
+
+        // toggle
+        this.setState({
+            show: !this.state.show
+        })
+
+        console.log("counter after", 
+        this.state.counter)
     };
 
     toggle = () => {
@@ -41,32 +63,12 @@ export default class Home
         })
     }
 
-    componentDidMount() {
-       this.unsubcribeFn = store.subscribe(() => {
-            console.log("HOME SUBS", Math.random());
-            this.forceUpdate(); // calls render
-        });
-
-        // unique id for timer
-        this.handle = setInterval(()=> {
-            console.log("Timer ")
-        }, 2000);
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.handle);
-        this.unsubcribeFn();
-    }
-
     render() {
-        // TODO redux store
-        let counter = store.getState().counter;
-
-        console.log("Home render ", counter);
+        console.log("Home render ", this.state.counter);
 
         return (
             <div>
-                <p> Counter {counter}</p>
+                <p> Counter {this.state.counter}</p>
 
                 <button onClick={(e) => this.increment(e) }>
                     +1

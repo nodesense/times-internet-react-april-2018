@@ -2,7 +2,7 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
 
-export default class Contact extends Component {
+export default class Address extends Component {
     constructor(props) {
         super(props);
     }
@@ -14,17 +14,17 @@ export default class Contact extends Component {
     render() {
         return (
             <div> 
-            <h2>Contact</h2>
+            <h2>Address</h2>
             </div>
         )
     }
 } 
 
 
-Contact.defaultProps = {
+Address.defaultProps = {
     
 }
 
-Contact.propTypes = {
+Address.propTypes = {
     
 }

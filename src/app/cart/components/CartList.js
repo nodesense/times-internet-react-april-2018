@@ -1,10 +1,13 @@
+// CartList.js
 
-import React, {Component} from "react";
+import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 
 import CartItem from "./CartItem";
 
-export default class CartList extends Component {
+//purecompoent does shall compare
+//compare two referrences
+export default class CartList extends PureComponent {
     constructor(props) {
         super(props);
     }
@@ -33,6 +36,8 @@ export default class CartList extends Component {
 {
     items.map ( item => (
         <CartItem key={item.id}
+                  updateItem={this.props.updateItem}
+                  removeItem={this.props.removeItem}
                   item={item} />
     ))
 }

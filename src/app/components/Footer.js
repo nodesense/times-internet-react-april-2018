@@ -17,6 +17,10 @@ export default function Footer(props) {
             <hr />
 
             <p>Copyrights @{props.year}, {props.title}</p>
+            
+            {/* children represent content children */}
+            
+            {props.children}
 
         </div>
     )
